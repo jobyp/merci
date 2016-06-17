@@ -44,11 +44,14 @@ CHIP ALU {
     PARTS:
    // Put you code here:
 
+   // if zx == 1 then x -> 0
    Mux16 ( a = x, b = false, sel = zx, out = zx0 );
 
+   // if nx == 1, then x = !x (bitwise not)
    Not16 ( in = zx0, out = nx0 );
    Mux16 ( a = zx0, b = nx0, sel = nx, out = nx1 );
 
+   
    Mux16 ( a = y, b = false, sel = zy, out = zy0 );
    
    Not16 ( in = zy0, out = ny0 );
@@ -60,14 +63,20 @@ CHIP ALU {
    And16 ( a = nx1, b = ny1, out = xyAnd );
 
    Mux16 ( a = xyAnd, b = xySum, sel = f, out = out1 );
-   Or16 ( a = out1, b = false, out = out );
    
-   Or16Way ( in = out1, out = nzr );
+   // no
+   Not16 ( in = out1, out = out2 );
+   
+   Mux16 ( a = out1, b = out2, sel = no, out = negout );
+
+   Or16 ( a = negout, b = false, out = out );
+   
+   Or16Way ( in = negout, out = nzr );
    Not ( in = nzr, out = zr );
 
    // out[15] = ng
-   And16 ( a = out1, b[0] = true, b[1..15] = false, out = out2 );
-   Or16Way ( in = out2, out = ng );
+   And16 ( a = negout, b[1..14] = false, b[15] = true, out = out3 );
+   Or16Way ( in = out3, out = ng );
 }
 
 // DONE - Joby Poriyath
