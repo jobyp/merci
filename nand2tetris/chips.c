@@ -76,7 +76,18 @@ void chip_Mux(pin a, pin b, pin sel, pin* out)
 	pin sel_b;
 	chip_And( b, sel, &sel_b );
 
-	chip_Or( sel_a, sel_b, out);
+	chip_Or( sel_a, sel_b, out );
+
+	return;
+}
+
+void chip_DMux(pin in, pin sel, pin* a, pin* b)
+{
+	pin not_sel;
+	chip_Not( sel, &not_sel );
+
+	chip_And( in, not_sel, a );
+	chip_And( in, sel, b );
 
 	return;
 }

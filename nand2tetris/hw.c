@@ -5,6 +5,45 @@
 #include "chips.h"
 
 /*
+Testing chip_DMux
+-----------------
+| in | sel | a | b |
+|  0 |   0 | 0 | 0 |
+|  0 |   1 | 0 | 0 |
+|  1 |   0 | 1 | 0 |
+|  1 |   1 | 0 | 1 |
+*/
+
+static void test_chip_DMux()
+{
+	pin in;
+	pin sel;
+	pin a;
+	pin b;
+
+	pin valid_a[] = { 0, 0, 1, 0 };
+	pin valid_b[] = { 0, 0, 0, 1 };
+
+	printf( "Testing chip_DMux - Verified\n" );
+	printf( "----------------------------\n" );
+	printf( "| in | sel | a | b |\n" );
+
+	for ( in = 0; in <= 1; in++ ) {
+
+		for( sel = 0; sel <= 1; sel++ ) {
+				
+				chip_DMux( in, sel, &a, &b );
+				assert( a == valid_a[2 * in + sel] );
+				assert( b == valid_b[2 * in + sel] );
+				printf( "| %2u | %3u | %u | %u |\n", in, sel, a, b );
+			}
+	}
+
+	printf("\n");
+	
+	return;
+}
+/*
 Testing chip_Mux
 ----------------
 | a | b | sel | out |
@@ -28,23 +67,29 @@ static void test_chip_Mux()
 	pin valid_out[] = { 0, 0, 0, 1, 1, 0, 1, 1 };
 
 
-	printf( "\n\nTesting chip_Mux - Verified\n" );
-	printf(     "---------------------------\n" );
+	printf( "Testing chip_Mux - Verified\n" );
+	printf( "---------------------------\n" );
 	printf( "| a | b | sel | out |\n" );
 
-	for ( a = 0; a <= 1; a++ )
-		for( b = 0; b <= 1; b++ )
+	for ( a = 0; a <= 1; a++ ) {
+
+		for( b = 0; b <= 1; b++ ) {
+
 			for( sel = 0; sel <= 1; sel++ ) {
 				
 				chip_Mux( a, b, sel, &out );
 				assert( out == valid_out[4 * a + 2 * b + sel] );
 				printf( "| %u | %u | %3u | %3u |\n", a, b, sel, out );
 			}
+		}
+	}
+
+	printf("\n");
+
 	return;
 }
 
 /*
-
 Testing chip_Xor
 ----------------
 | a | b | out |
@@ -52,8 +97,8 @@ Testing chip_Xor
 | 0 | 1 |   1 |
 | 1 | 0 |   1 |
 | 1 | 1 |   0 |
- 
 */
+
 static void test_chip_Xor()
 {
 	pin a;
@@ -62,8 +107,8 @@ static void test_chip_Xor()
 	
 	pin valid_out[] = { 0, 1, 1, 0 };
 	
-	printf( "\n\nTesting chip_Xor - Verified\n" );
-	printf(     "---------------------------\n" );
+	printf( "Testing chip_Xor - Verified\n" );
+	printf( "---------------------------\n" );
 	printf( "| a | b | out |\n" );
 
 	for( a = 0; a <= 1; a++ ) {
@@ -75,6 +120,8 @@ static void test_chip_Xor()
 			printf( "| %u | %u | %3u |\n", a, b, out );
 		}
 	}
+
+	printf("\n");
 
 	return;
 }
@@ -97,8 +144,8 @@ static void test_chip_Or()
 	
 	pin valid_out[] = { 0, 1, 1, 1 };
 
-	printf( "\n\nTesting chip_Or - Verified\n" );
-	printf(     "--------------------------\n" );
+	printf( "Testing chip_Or - Verified\n" );
+	printf( "--------------------------\n" );
 	printf( "| a | b | out |\n" );
 
 	for( a = 0; a <= 1; a++ ) {
@@ -110,6 +157,8 @@ static void test_chip_Or()
 			printf( "| %u | %u | %3u |\n", a, b, out );
 		}
 	}
+
+	printf("\n");
 
 	return;
 }
@@ -130,8 +179,8 @@ static void test_chip_Not()
 
 	pin valid_out[] = { 1, 0 };
 
-	printf( "\n\nTesting chip_Not - Verified\n" );
-	printf(     "---------------------------\n" );
+	printf( "Testing chip_Not - Verified\n" );
+	printf( "---------------------------\n" );
 	printf( "| in | out |\n" );
 	
 	for( in = 0; in <= 1; in++ ) {
@@ -140,6 +189,8 @@ static void test_chip_Not()
 		assert( out == valid_out[ in ] );
 		printf( "| %2u | %3u |\n", in, out );
 	}
+
+	printf("\n");
 
 	return;
 }
@@ -152,7 +203,7 @@ Testing chip_And
 | 0 | 1 |   0 |
 | 1 | 0 |   0 |
 | 1 | 1 |   1 |
- */
+*/
 
 static void test_chip_And()
 {
@@ -162,8 +213,8 @@ static void test_chip_And()
 
 	pin valid_out[] = { 0, 0, 0, 1 };
 	
-	printf( "\n\nTesting chip_And - Verified\n" );
-	printf(     "---------------------------\n" );
+	printf( "Testing chip_And - Verified\n" );
+	printf( "---------------------------\n" );
 	printf( "| a | b | out |\n" );
 
 	for( a = 0; a <= 1; a++ ) {
@@ -176,16 +227,21 @@ static void test_chip_And()
 		}
 	}
 
+	printf("\n");
+
 	return;
 }
 
 int main()
 {
+	printf("\n");
+
 	test_chip_Not();
 	test_chip_And();
 	test_chip_Or();
 	test_chip_Xor();
 	test_chip_Mux();
+	test_chip_DMux();
 
 	return 0;
 }
