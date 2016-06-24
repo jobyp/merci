@@ -9,13 +9,13 @@ check_hdl_src: $(wildcard *.hdl)
 	@echo
 
 hw: chips.o hw.o
-	gcc -Wall -o $@ $^
+	gcc -Wall -std=c11 -o $@ $^
 
 hw.o : chips.h
 chips.o : chips.h
 
 %.o : %.c
-	gcc -Wall -c $< -o $@
+	gcc -Wall -std=c11 -c $< -o $@
 
 .PHONY: echo
 echo:

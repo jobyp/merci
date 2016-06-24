@@ -18,4 +18,4 @@ CHIP Not {
     Nand ( a = in, b = in, out = out); 
 }
 
-// DONE - Joby Poriyath
+// DONE + C

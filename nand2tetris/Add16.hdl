@@ -34,4 +34,4 @@ CHIP Add16 {
     FullAdder ( a = a[15], b = b[15], c = c15, sum = out[15], carry = c16 );
 }
 
-// DONE - Joby Poriyath
+// DONE

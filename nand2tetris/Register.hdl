@@ -34,4 +34,4 @@ CHIP Register {
     Bit ( in = in[15], load = load, out = out[15] );
 }
 
-// DONE - Joby Poriyath
+// DONE

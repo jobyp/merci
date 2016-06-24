@@ -21,4 +21,4 @@ CHIP Bit {
     And ( a = true, b = loop1, out = out );
 }
 
-// DONE - Joby Poriyath
+// DONE

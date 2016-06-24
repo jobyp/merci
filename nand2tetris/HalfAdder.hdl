@@ -19,4 +19,5 @@ CHIP HalfAdder {
     And ( a = a, b = b, out = carry );
 }
 
-// DONE - Joby Poriyath
+// DONE + C
+

@@ -91,3 +91,60 @@ void chip_DMux(pin in, pin sel, pin* a, pin* b)
 
 	return;
 }
+
+void chip_HalfAdder(pin a, pin b, pin* sum, pin* carry)
+{
+	chip_Xor( a, b, sum );
+	chip_And( a, b, carry );
+	
+	return;
+}
+
+void chip_FullAdder(pin a, pin b, pin c, pin* sum, pin* carry)
+{
+	
+	pin abS;
+	pin abC;
+
+	chip_HalfAdder( a, b, &abS, &abC );
+
+	pin abcC;
+	
+	chip_HalfAdder( c, abS, sum, &abcC );
+	chip_Or( abcC, abC, carry );
+
+	return;
+}
+
+
+void chip_And16(pin a[], pin b[], pin out[])
+{
+	for( unsigned i = 0; i <= 16; i++ ) {
+		
+		chip_And( a[i], b[i], ( out + i ) );
+	}
+
+	return;
+}
+
+void chip_Or16(pin a[], pin b[], pin out[])
+{
+	for( unsigned i = 0; i <= 16; i++ ) {
+		
+		chip_Or( a[i], b[i], ( out + i ) );
+	}
+
+	return;
+}
+
+
+void chip_Not16(pin in[], pin out[])
+{
+	for( unsigned i = 0; i <= 16; i++ ) {
+		
+		chip_Not( in[i], ( out + i ) );
+	}
+
+	return;
+}
+

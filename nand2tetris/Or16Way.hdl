@@ -15,5 +15,5 @@ CHIP Or16Way {
     Or ( a = fst, b = snd, out = out );
 }
 
-// DONE - Joby Poriyath -- Not part of the course.
+// DONE
 
